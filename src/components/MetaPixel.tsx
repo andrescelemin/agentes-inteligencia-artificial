@@ -1,67 +1,68 @@
 /**
- * MetaPixel: Inyecta el píxel de Meta en <head> y registra eventos en una SPA.
- * - Inserta el loader oficial + init una sola vez (guard por ID).
- * - Añade el evento ViewContent "junto al pixel" (requisito del cliente).
- * - Emite PageView en cambios de ruta (SPA) para evitar duplicados en la carga inicial.
- * - Inserta el bloque noscript en <body>.
+ * MetaPixel: Inyecta el píxel de Meta en &lt;head&gt; y registra eventos en una SPA.
+ * - Inserta el loader oficial + init + PageView UNA sola vez en &lt;head&gt; (al final, antes de &lt;/head&gt;).
+ * - Añade el bloque noscript en &lt;body&gt;.
+ * - Emite PageView en cambios de ruta (SPA) sin duplicar el inicial.
  */
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router'
 
 /**
  * Component: MetaPixel
- * Gestiona la inyección del script base y el tracking de PageView por ruta.
+ * - Coloca el código base del píxel en &lt;head&gt; (debajo de cualquier otro script y antes de &lt;/head&gt;).
+ * - Mantiene tracking consistente en una SPA.
  */
 export default function MetaPixel(): JSX.Element | null {
   const location = useLocation()
+  const hasHandledInitialRoute = useRef(false)
 
-  // Inyección única del loader + init + ViewContent
+  // Inyección única del loader + init + PageView en HEAD
   useEffect(() => {
     const SCRIPT_ID = 'meta-pixel-base'
     if (document.getElementById(SCRIPT_ID)) return
 
-    // Script base con init y evento "ViewContent" junto al píxel (sin PageView aquí para evitar duplicado)
+    // Script base oficial dentro de &lt;head&gt;
     const script = document.createElement('script')
     script.id = SCRIPT_ID
     script.type = 'text/javascript'
-    script.innerHTML = `/* Meta Pixel Code (auto-inserted) */
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1077386280774473');
+    script.innerHTML =
+      "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?" +
+      "n.callMethod.apply(n,arguments):n.queue.push(arguments)};" +
+      "if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';" +
+      "n.queue=[];t=b.createElement(e);t.async=!0;" +
+      "t.src=v;s=b.getElementsByTagName(e)[0];" +
+      "s.parentNode.insertBefore(t,s)}(window, document,'script'," +
+      "'https://connect.facebook.net/en_US/fbevents.js');" +
+      "fbq('init', '1308354527031907');" +
+      "fbq('track', 'PageView');"
 
-/* Evento adicional solicitado (junto al pixel) */
-fbq('track', 'ViewContent', {
-  content_ids: ['123'],
-  content_type: 'product',
-});
-/* End Meta Pixel Code */
-`
+    // Se agrega al final del &lt;head&gt; (debajo de otros scripts y antes de &lt;/head&gt;)
     document.head.appendChild(script)
 
-    // Bloque noscript en BODY (válido por especificación HTML)
+    // Bloque noscript (válido por especificación HTML) en BODY
     if (!document.getElementById('meta-pixel-noscript')) {
       const noScript = document.createElement('noscript')
       noScript.id = 'meta-pixel-noscript'
       noScript.innerHTML =
-        '<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1077386280774473&ev=PageView&noscript=1" />'
+        '&lt;img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1308354527031907&amp;ev=PageView&amp;noscript=1" /&gt;'
       if (document.body) {
         document.body.appendChild(noScript)
       } else {
-        document.head.appendChild(noScript) // Fallback mínimo si body no está disponible aún
+        // Fallback mínimo si body no está disponible aún
+        document.head.appendChild(noScript)
       }
     }
   }, [])
 
-  // Disparar PageView en cada ruta (incluye carga inicial) para evitar doble conteo
+  // Disparar PageView en cada cambio de ruta SIN duplicar la carga inicial
   useEffect(() => {
     const fbqAny = (window as any)?.fbq
+    // Saltar el primer render: ya fue trackeado por el snippet base en &lt;head&gt;
+    if (!hasHandledInitialRoute.current) {
+      hasHandledInitialRoute.current = true
+      return
+    }
     if (typeof fbqAny === 'function') {
       fbqAny('track', 'PageView')
     }

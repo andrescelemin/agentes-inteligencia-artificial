@@ -1,7 +1,9 @@
 /**
+ * Integrations.tsx
  * Sección de Integraciones para Home.
- * Destaca n8n, Zapier, Make y Airtable usando los logos proporcionados por el usuario u oficiales.
+ * Destaca n8n, Zapier, Make y Airtable usando logos oficiales.
  */
+
 import React from 'react'
 import { Button } from '../ui/button'
 
@@ -84,7 +86,14 @@ export default function LandingIntegrations(): JSX.Element {
             asChild
             className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
           >
-            <a href="https://wa.me/51939140886" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://wa.me/51939140886"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Consultar integraciones por WhatsApp"
+              data-fb-event="WhatsAppClick"
+              data-fb-payload='{"source":"IntegrationsSection"}'
+            >
               Consultar integraciones
             </a>
           </Button>

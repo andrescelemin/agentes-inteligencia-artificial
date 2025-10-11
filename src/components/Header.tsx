@@ -34,12 +34,12 @@ export default function Header(): JSX.Element {
   const nav: NavItem[] = [
     { to: '/', label: 'Inicio' },
     { to: '/products', label: 'Servicios' },
-    { to: '/about', label: 'Sobre Nosotros' },
     { to: '/solutions', label: 'Soluciones' },
-    { to: '/roi-calculator', label: 'Calculadora' },
-    { to: '/demo', label: 'Demo' },
+    { to: '/about', label: 'Nosotros' },
     { to: '/blog', label: 'Blog' },
     { to: '/testimonials', label: 'Testimonios' },
+    { to: '/roi-calculator', label: 'Calculadora ROI' },
+    { to: '/demo', label: 'Demo' },
     { to: '/contact', label: 'Contacto' },
   ]
 
@@ -48,7 +48,7 @@ export default function Header(): JSX.Element {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Marca */}
         <Link to="/" aria-label="Ir a inicio" className="flex items-center gap-2">
-          <LogoWithWordmark className="h-10 w-10" />
+          <LogoWithWordmark className="h-10 w-10" showText={false} />
         </Link>
 
         {/* Navegación Desktop */}

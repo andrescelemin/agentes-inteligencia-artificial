@@ -1,7 +1,10 @@
 /**
- * Aplicación principal con sistema de enrutamiento para SmartPrompt Solutions
- * Especializada en Agentes de IA personalizados para entornos profesionales específicos
+ * App.tsx
+ * Aplicación principal con enrutamiento para SmartPrompt Solutions.
+ * - Monta proveedores globales (MetaPixel, FacebookEvents, Favicon) y layout.
+ * - Usa react-router (HashRouter) según las restricciones del entorno.
  */
+
 import { HashRouter, Route, Routes } from 'react-router'
 import HomePage from './pages/Home'
 import ProductsPage from './pages/Products'
@@ -21,14 +24,23 @@ import BlogDetailPage from './pages/BlogDetail'
 import ScrollToTop from './components/ScrollToTop'
 import MetaPixel from './components/MetaPixel'
 import Favicon from './components/Favicon'
+import FacebookEvents from './components/FacebookEvents'
 
-export default function App() {
+/**
+ * Componente principal de la SPA.
+ * - Restablece el scroll en cambio de ruta.
+ * - Inyecta Meta Pixel y escucha eventos de conversión globales.
+ * - Renderiza layout base con Header/Footer y contenido por rutas.
+ */
+export default function App(): JSX.Element {
   return (
     <HashRouter>
       {/* Restablece el scroll al cambiar de ruta para evitar quedar al pie (footer) */}
       <ScrollToTop />
       {/* Píxel de Meta instalado en todas las páginas + PageView en SPA */}
       <MetaPixel />
+      {/* Delegación global de clics para eventos (WhatsApp, Lead, Contact, Tel) */}
+      <FacebookEvents />
       {/* Favicon personalizado basado en el logo de SmartPrompt */}
       <Favicon />
       <div className="min-h-screen bg-white">
