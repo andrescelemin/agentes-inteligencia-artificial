@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#047857" />
+
+    <!-- ===================== SEO ===================== -->
+    <title>Agentes IA - Soluciones de Inteligencia Artificial</title>
+    <meta name="description" content="Automatiza ventas, soporte y operaciones con agentes IA autónomos entrenados con tu conocimiento y conectados a tus herramientas." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.agentes-inteligencia-artificial.online/" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Agentes IA - Soluciones de Inteligencia Artificial" />
+    <meta property="og:description" content="Automatiza ventas, soporte y operaciones con agentes IA conectados a WhatsApp, web y CRM." />
+    <meta property="og:url" content="https://www.agentes-inteligencia-artificial.online/" />
+    <meta property="og:image" content="https://www.agentes-inteligencia-artificial.online/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Agentes IA - Soluciones de Inteligencia Artificial" />
+    <meta name="twitter:description" content="Automatiza ventas, soporte y operaciones con agentes IA conectados a tus herramientas." />
+    <meta name="twitter:image" content="https://www.agentes-inteligencia-artificial.online/og-image.jpg" />
+
+    <!-- ===================== GTM + Consent Mode ===================== -->
+    <script>
+      // DataLayer y Consent Mode v2
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'granted',
+        wait_for_update: 2000
+      });
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    </script>
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-K8TTTNL5');
+    </script>
+
+    <!-- ===================== Meta Pixel ===================== -->
+    <script>
+      !(function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
+      })(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '833024165811190');
+      fbq('track', 'PageView');
+    </script>
+    <noscript>
+      <img height="1" width="1" style="display:none"
+           src="https://www.facebook.com/tr?id=833024165811190&ev=PageView&noscript=1"/>
+    </noscript>
+
+    <!-- ===================== n8n Chat: estilos del widget ===================== -->
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- GTM noscript -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K8TTTNL5"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <!-- Contenedor principal de la app -->
+    <div id="root"></div>
+
+    <!-- ========== CONTENEDOR DIAGNÓSTICO (no cambia tu diseño) ========== -->
+    <div id="n8n-chat-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; border: 3px solid red; padding: 15px; background: white; min-width: 350px; min-height: 250px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+      <div style="color: red; font-weight: bold; font-size: 16px; margin-bottom: 10px;">🚨 CONTENEDOR DE CHAT - DIAGNÓSTICO</div>
+      <div id="chat-status" style="color: blue; font-size: 14px; margin-bottom: 5px;">Estado: Verificando recursos...</div>
+      <div id="chat-errors" style="color: orange; font-size: 12px;"></div>
+      <div style="margin-top: 10px; font-size: 12px; color: #666;">
+        <strong>Webhook:</strong> wsworkflow-n8n.vn0m5y.easypanel.host
+      </div>
+      <div id="n8n-chat-target" style="margin-top:12px;"></div>
+    </div>
+
+    <!-- ===================== Bundle principal (React/Vite) ===================== -->
+    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- ===================== n8n Chat (ESM) con fallback directo→proxy ===================== -->
+    <script type="module">
+      // 1) URL del Worker de Cloudflare (si usas proxy). Pon tu subdominio real:
+      window.__N8N_PROXY_URL__ = 'https://tu-worker.workers.dev'; // <-- cámbialo si tienes Worker
+
+      // 2) Webhook directo (producción)
+      const DIRECT_WEBHOOK = 'https://wsworkflow-n8n.vn0m5y.easypanel.host/webhook/5643dc77-ef2a-45c6-bbf6-0eb6de813f6e/chat';
+
+      // 3) Webhook vía proxy (ruta /n8n/…)
+      const PROXY_WEBHOOK = (window.__N8N_PROXY_URL__)
+        ? (window.__N8N_PROXY_URL__.replace(/\/+$/,'') + '/n8n/webhook/5643dc77-ef2a-45c6-bbf6-0eb6de813f6e/chat')
+        : '';
+
+      // Helpers de tracking (GTM/Pixel)
+      const pushDL = (event, payload = {}) => window.dataLayer && window.dataLayer.push({ event, ...payload });
+      const trackClickChat = () => { window.fbq && fbq('trackCustom', 'ClickChat'); pushDL('click_chat'); };
+      const trackLead = (payload = {}) => { window.fbq && fbq('track', 'Lead', { content_name: 'n8n_chat', ...payload }); pushDL('lead_chat', payload); };
+
+      // UI diagnóstico
+      const updateChatStatus = (msg, isError = false) => {
+        const el = document.getElementById('chat-status');
+        if (el) { el.textContent = 'Estado: ' + msg; el.style.color = isError ? 'red' : 'blue'; }
+      };
+      const updateChatErrors = (error) => {
+        const el = document.getElementById('chat-errors');
+        if (el) { el.textContent = 'Error: ' + error; el.style.color = 'red'; }
+      };
+
+      // Intento directo; si falla (CORS/Network), uso proxy
+      async function pickWebhook() {
+        try {
+          const r = await fetch(DIRECT_WEBHOOK, { method: 'OPTIONS' });
+          if (r.ok) return { url: DIRECT_WEBHOOK, via: 'direct' };
+          throw new Error('Preflight failed');
+        } catch {
+          if (PROXY_WEBHOOK) return { url: PROXY_WEBHOOK, via: 'proxy' };
+          return { url: DIRECT_WEBHOOK, via: 'direct' };
+        }
+      }
+
+      (async () => {
+        updateChatStatus('Inicializando widget...');
+        const { createChat } = await import('https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js');
+
+        const chosen = await pickWebhook();
+        if (chosen.via === 'proxy') {
+          console.info('n8n conectado (proxy)');
+          pushDL('chat_proxy_mode');
+          updateChatStatus('Conectado (proxy)');
+        } else {
+          console.info('n8n conectado (directo)');
+          updateChatStatus('Conectado (directo)');
+        }
+
+        createChat({
+          webhookUrl: chosen.url,
+          target: '#n8n-chat-target',
+          mode: 'window',
+          defaultLanguage: 'es',
+          initialMessages: ['¡Hola! 👋 ¿En qué puedo ayudarte hoy?'],
+          theme: { primaryColor: '#047857' },
+
+          // ACTIVADO:
+          enableStreaming: true,       // activa también "Streaming response" en tu Chat Trigger
+          loadPreviousSession: true,
+          allowFileUploads: true,
+          allowedFilesMimeTypes: '',
+
+          // Opcional:
+          // webhookConfig: { method: 'POST', headers: { 'X-Site': 'Agentes-IA' } },
+        });
+
+        // Señales de embudo
+        pushDL('chat_widget_ready');
+        window.fbq && fbq('track', 'ViewContent', { content_name: 'n8n_chat_widget' });
+
+        // Intención de chatear (primer focus)
+        let firstFocusTracked = false;
+        const obs = new MutationObserver(() => {
+          const input = document.querySelector('#n8n-chat-target input, #n8n-chat-target textarea');
+          if (input && !firstFocusTracked) {
+            input.addEventListener('focus', () => {
+              if (!firstFocusTracked) {
+                firstFocusTracked = true;
+                trackClickChat();
+              }
+            }, { once: true });
+          }
+        });
+        const targetNode = document.getElementById('n8n-chat-target');
+        if (targetNode) obs.observe(targetNode, { childList: true, subtree: true });
+
+        // Ping de salud
+        fetch(chosen.url, { method: 'OPTIONS' }).then(r => { if (r.ok) pushDL('chat_endpoint_reachable'); }).catch(()=>{});
+        updateChatStatus('✅ Chat funcionando');
+      })().catch(err => {
+        console.error('❌ Error inicializando n8n:', err);
+        updateChatStatus('Error inicializando chat', true);
+        updateChatErrors(err?.message || String(err));
+        pushDL('chat_error', { step: 'init', message: String(err) });
+      });
+
+      // Marca manual de Lead (si tu lógica lo requiere)
+      window._markChatLead = () => trackLead({ status: 'ok' });
+    </script>
+
+    <!-- ===================== Verificación de Pixel ===================== -->
+    <script>
+      setTimeout(function() {
+        if (typeof window.fbq === 'function') {
+          console.log('✅ Meta Pixel OK (ID 833024165811190)');
+        } else {
+          console.error('❌ Meta Pixel no se cargó');
+          window.dataLayer && window.dataLayer.push({event:'pixel_not_loaded'});
+        }
+      }, 3000);
+    </script>
+  </body>
+</html>
